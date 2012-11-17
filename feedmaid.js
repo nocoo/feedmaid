@@ -8,6 +8,7 @@
 var express = require('express'),
     data = require('./routes/data'),
     api = require('./routes/api'),
+    page = require('./routes/page'),
     http = require('http'),
     path = require('path');
 
@@ -30,7 +31,10 @@ app.configure('development', function() {
 
 app.get('/v', data.version);
 app.get('/a/:token/:id/:name/:value', data.add);
-app.get('/a', data.add);
+app.post('/a', data.add);
+
+app.get('/', page.login);
+app.get('/register', page.register);
 
 http.createServer(app).listen(app.get('port'), function() {
     console.log('feedmaid server listening on port ' + app.get('port'));

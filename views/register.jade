@@ -1,0 +1,37 @@
+extends layout.login
+
+block content
+    section.s-login.s-register
+        form.fm-form(name='frm_login')
+            h1 feedmaid
+            div.row.clearfix
+                div.name
+                    p Account
+                div.value
+                    input(type='text', value='username')
+            div.row.clearfix
+                div.name
+                    p Password
+                div.value
+                    input(type='password', value='password')
+            div.row.clearfix
+                div.name
+                    p Email
+                div.value
+                    input(type='text', value='a@b.com')
+            div.row.clearfix
+                div.action
+                    button.fm-button#btn_create Create
+
+block append logic
+    script
+        ;(function($) {
+            $(document).ready(function() {
+
+                // Events.
+                $('#btn_register').on('click', function() {
+                    window.location.href = '/register';
+                    return false;
+                });
+            });
+        })(jQuery);
