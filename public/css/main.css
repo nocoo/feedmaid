@@ -63,12 +63,18 @@ textarea {
     padding: 2px 5px;
     cursor: pointer;
 }
+.fm-button:hover,
+.fm-button:active {
+    background: #00CCFF;
+    color: #FFF;
+}
 
 /* Layout login */
 
-.l-login footer { background: #F5F5F5; color: #999; position: fixed; bottom: 0; left: 0; right: 0; }
+.l-login footer { color: #CCC; font-size: 12px; position: fixed; bottom: 0; left: 0; right: 0; }
 .l-login footer p { text-align: center; margin: 5px 0; }
-.l-login footer p a { color: #555; margin: 0 4px; }
+.l-login footer p a { color: #CCC; margin: 0 4px; }
+.l-login footer p a:hover { color: #333; }
 
 .l-login .s-login {
     border: 1px solid #DDD;
@@ -83,10 +89,10 @@ textarea {
 .l-login .s-login h1 {
     line-height: 270px;
     color: #FFF; background: #00CCFF;
-    margin: 2px; text-align: center;
+    margin: 0; text-align: center;
     font-size: 32px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
 }
 
 .l-login .s-login div.row { margin: 10px 0; }

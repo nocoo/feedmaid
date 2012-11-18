@@ -2,32 +2,29 @@ extends layout.login
 
 block content
     section.s-login
-        form.fm-form(name='frm_login')
+        form.fm-form(name='form_login')
             h1 feedmaid
             div.row.clearfix
                 div.name
                     p Account
                 div.value
-                    input(type='text', value='username')
+                    input(type='text', name='username', value='username')
             div.row.clearfix
                 div.name
                     p Password
                 div.value
-                    input(type='password', value='password')
+                    input(type='password', name='password', value='password')
             div.row.clearfix
                 div.action
-                    button.fm-button#btn_login Login
+                    button.fm-button#btn_login(type='submit') Login
                     button.fm-button#btn_register Register
 
 block append logic
     script
-        ;(function($) {
-            $(document).ready(function() {
-
-                // Events.
-                $('#btn_register').on('click', function() {
-                    window.location.href = '/register';
-                    return false;
-                });
+        (function () {
+            'use strict';
+            /*global seajs*/
+            seajs.use([ '/js/page.login.js' ], function (page) {
+                page.ready();
             });
-        })(jQuery);
+        }());

@@ -29,12 +29,18 @@ app.configure('development', function() {
     app.use(express.errorHandler());
 });
 
+/* Client APIs. */
 app.get('/v', data.version);
 app.get('/a/:token/:id/:name/:value', data.add);
 app.post('/a', data.add);
 
+/* Web pages */
 app.get('/', page.login);
 app.get('/register', page.register);
+
+/* Web APIs */
+app.post('/api/register', api.register);
+app.post('/api/login', api.login);
 
 http.createServer(app).listen(app.get('port'), function() {
     console.log('feedmaid server listening on port ' + app.get('port'));
