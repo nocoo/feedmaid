@@ -24,8 +24,6 @@ exports.entity_get = function(name, search, callback) {
                 return callback(506, error);
             }
 
-            var ObjectID = mongodb.ObjectID;
-
             collection.findOne(search, function(error, entity) {
                 db.close();
                 if(error) {
@@ -46,6 +44,7 @@ exports.entity_add = function(name, entity, callback) {
 
     entity['create_at_timestamp'] = (new Date()).getTime();
     entity['create_at'] = tools.timestamp();
+
     tools.dbopen(function(error, db) {
         if(error) {
             db.close();
@@ -113,8 +112,8 @@ exports.entity_list = function(name, last_id, callback) {
 };
 
 // Entity operations, Delete an entity.
-exports.entity_delete = function(name, entity, callback) {
-    if(!name || !entity) {
+exports.entity_delete = function(name, search, callback) {
+    if(!name || !search) {
         return callback(400, 'Bad Request');
     }
 
@@ -128,9 +127,7 @@ exports.entity_delete = function(name, entity, callback) {
                 return callback(506, error);
             }
 
-            var ObjectID = mongodb.ObjectID;
-
-            collection.remove({ '_id': new ObjectID(entity['_id']) }, { safe: true }, function(error, result) {
+            collection.remove(search, { safe: true }, function(error, result) {
                 db.close();
 
                 if(error) {
@@ -145,8 +142,8 @@ exports.entity_delete = function(name, entity, callback) {
 };
 
 // Entity operations, Update an entity.
-exports.entity_update = function(name, entity, callback) {
-    if(!name || !entity) {
+exports.entity_update = function(name, ent, callback) {
+    if(!ent || !ent) {
         return callback(400, 'Bad Request');
     }
 
@@ -160,25 +157,25 @@ exports.entity_update = function(name, entity, callback) {
                 return callback(506, error);
             }
 
-            var ObjectID = mongodb.ObjectID, id = entity['_id'];
+            var ObjectID = mongodb.ObjectID, id = ent['_id'].toString();
 
-            delete entity['id'];
+            delete ent['id'];
             var todo = [];
-            for(var property in entity) if(!entity[property]) todo.push(property);
-            for(var i = 0; i < todo.length; ++i) delete entity[todo[i]];
+            for(var property in ent) if(!ent[property]) todo.push(property);
+            for(var i = 0; i < todo.length; ++i) delete ent[todo[i]];
 
-            entity['update_at_timestamp'] = (new Date()).getTime();
-            entity['update_at'] = tools.timestamp();
-            delete entity['_id'];
+            ent['update_at_timestamp'] = (new Date()).getTime();
+            ent['update_at'] = tools.timestamp();
+            delete ent['_id'];
 
-            collection.update({ '_id': new ObjectID(id) }, { $set: entity }, { safe: true }, function(error, affected) {
+            collection.update({ '_id': new ObjectID(id) }, { $set: ent }, { safe: true }, function(error, affected) {
                 db.close();
                 if(error) {
                     return callback(506, error);
                 }
 
                 tools.log('Entity "' + name + '" updated, affected: ' + affected);
-                return callback(200, entity);
+                return callback(200, ent);
             });
         });
     });

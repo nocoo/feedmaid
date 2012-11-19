@@ -7,27 +7,44 @@
 
 var mongodb = require('mongodb');
 
+// feedmaid version.
 exports.VERSION = '0.1.0';
+
+// Mongodb port
 exports.PORT = 17755;
+
+// session max age, in ms
 exports.SESSION_MAX_AGE = 600000;
+
+// entities per page
 exports.PER_PAGE_COUNT = 20;
+
+// timeout
 exports.TIMEOUT = 5000;
 
 // GUID.
 exports.guid = function(type) {
-    var S4 = function() { return (((1 + Math.random()) * 0x10000)|0).toString(16).substring(1); };
+    var S4 = function() { return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1); };
 
-    if(type === 'long') {
-        return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+    if (type === 'long') {
+        return (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4());
     } else {
-        return (S4()+S4());
+        return (S4() + S4());
     }
 };
 
 exports.dbopen = function(callback) {
-    var db = new mongodb.Db('feedmaid', new mongodb.Server('localhost', 27017, { 'auto_reconnect': true, 'poolSize': 20, 'safe': true }));
+    var db = new mongodb.Db(
+        'feedmaid',
+        new mongodb.Server(
+            'localhost',
+            27017,
+            { 'auto_reconnect': true, 'poolSize': 20 }
+        ),
+        { 'safe': true }
+    );
     db.open(function(error, db) {
-        if(error) {
+        if (error) {
             return callback(error);
         }
 
@@ -38,7 +55,7 @@ exports.dbopen = function(callback) {
 // TimeStamp.
 exports.timestamp = function(d) {
     var date;
-    if(d) { date = d; }
+    if (d) { date = d; }
     else { date = new Date(); }
 
     var yyyy = date.getFullYear(),
@@ -53,9 +70,9 @@ exports.timestamp = function(d) {
 
 // Check login.
 exports.check = function(req) {
-    if(req.session.admin) {
+    if (req.session.admin) {
         var time = (new Date).getTime();
-        if(!req.session.admin['check_at'] || time - req.session.admin['check_at'] > exports.SESSION_MAX_AGE) {
+        if (!req.session.admin['check_at'] || time - req.session.admin['check_at'] > exports.SESSION_MAX_AGE) {
             exports.log('User session timeout', req.session.admin['username']);
             req.session.admin = undefined;
             return undefined;
@@ -70,8 +87,8 @@ exports.check = function(req) {
 };
 
 exports.log = function(message, extra) {
-    var result = [ '+ [' + exports.timestamp () + '] ', message ];
-    if(extra) {
+    var result = ['+ [' + exports.timestamp() + '] ', message];
+    if (extra) {
         result.push(', extra: ');
         result.push(JSON.stringify(extra));
     }
@@ -83,7 +100,7 @@ exports.log = function(message, extra) {
 
     // Add to database.
     exports.dbopen(function(error, db) {
-        if(!error) {
+        if (!error) {
             db.collection('logs', function(error, collection) {
                 var doc = {
                     'time': (new Date()).getTime(),
@@ -120,8 +137,8 @@ exports.json_result = function(code, message, extra) {
         'extra': extra
     };
 
-    if(!result.message) {
-        switch(result.code) {
+    if (!result.message) {
+        switch (result.code) {
             case 200: {
                 result.message = 'OK.';
                 break;
