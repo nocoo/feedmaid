@@ -57,17 +57,48 @@ textarea {
 
 /* Controls */
 .fm-button {
-    border: 1px solid #00CCFF;
-    background: #bff2ff;
-    color: #00b5e2;
-    padding: 2px 5px;
+    border: 1px solid #0055d4;
+    background: #0055d4;
+    background: -webkit-linear-gradient(top, #00aad4, #0055d4);
+    border-radius: 4px;
+    font-size: 12px;
+    text-decoration: none;
+    color: #FFF;
+    padding: 3px 10px;
     cursor: pointer;
 }
 .fm-button:hover,
 .fm-button:active {
-    background: #00CCFF;
+    background: #0055d4;
     color: #FFF;
 }
+
+.fm-table {
+    margin: 10px 0;
+    border: 1px solid #DDD;
+    width: 100%;
+    font-size: 12px;
+    line-height: 30px;
+}
+
+.fm-form div.row { margin: 10px 0; }
+.fm-form div.row .name { width: 90px; float: left; text-align: right; }
+.fm-form div.row .name p { padding-right: 10px; line-height: 24px; margin: 4px 0; }
+.fm-form div.row .value { float: left; }
+.fm-form div.row .value input { font-size: 12px; line-height: 24px; width: 180px; padding: 0px 5px; outline: none; }
+.fm-form div.row .action { margin-left: 88px; }
+.fm-form div.row .action .fm-button { min-width: 95px; margin: 0 2px; }
+
+.fm-table thead tr th { font-weight: normal; color: #333; text-align: left; }
+.fm-table thead tr { border-bottom: 1px solid #CCC; }
+.fm-table tbody tr { border-bottom: 1px dotted #EEE; }
+.fm-table tbody tr.pass { background: #ccffcc; }
+.fm-table tbody tr.fail { background: #ffcccc; }
+.fm-table tbody tr.error { background: #ffff99; }
+.fm-table tbody tr:last-child { border-bottom: none; }
+.fm-table th,
+.fm-table td { padding: 0px 10px; }
+.fm-table .fm-button { line-height: 18px; margin-right: 2px; }
 
 /* Layout login */
 
@@ -95,18 +126,59 @@ textarea {
     border-top-right-radius: 6px;
 }
 
-.l-login .s-login div.row { margin: 10px 0; }
-.l-login .s-login div.row .name { width: 90px; float: left; text-align: right; }
-.l-login .s-login div.row .name p { padding-right: 10px; line-height: 24px; margin: 4px 0; }
-.l-login .s-login div.row .value { float: left; }
-.l-login .s-login div.row .value input { line-height: 24px; width: 180px; padding: 0px 5px; outline: none; }
-.l-login .s-login div.row .action { margin-left: 88px; }
-.l-login .s-login div.row .action .fm-button { min-width: 95px; margin: 0 2px; }
-
 .l-login .s-login.s-register h1 { line-height: 230px; }
 
+/* Layout web */
 
+.l-web .fr { float: right; margin-bottom: 10px; }
 
+.l-web header {
+    background: #313330; margin: 0 10px; height: 40px;
+    border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;
+    background: -webkit-linear-gradient(top, #00aad4, #0055d4);
+    box-shadow: 0px 0px 10px #AAA;
+}
+.l-web header h1 {
+    float: left;
+    margin: 0 20px; line-height: 40px;
+    font-size: 18px; font-weight: normal;
+    color: #FFF; text-shadow: 1px 1px 1px #0055d4;
+}
+.l-web header div.right { float: right; }
+.l-web header div.right p { line-height: 40px; font-size: 12px; color: #FFF; text-shadow: 1px 1px 1px #0055d4; margin: 0 10px; }
+
+.l-web .container {
+    margin: 10px; background: #FFF;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #DDD;
+    box-shadow: 0px 0px 10px #DDD;
+}
+
+.l-web footer {
+    background: #EEE; border-top-left-radius: 4px; border-top-right-radius: 4px;
+    box-shadow: 0px 0px 10px #DDD; border: 1px solid #DDD; border-bottom: none;
+    color: #555; font-size: 12px;
+    position: fixed; bottom: 0; left: 10px; right: 10px;
+}
+.l-web footer p { text-align: center; margin: 5px 0; }
+.l-web footer p a { color: #555; margin: 0 4px; }
+.l-web footer p a:hover { color: #333; }
+
+.l-web .menu {
+    float: left;
+    margin-right: 10px;
+    width: 100px;
+    border-right: 1px solid #EEE;
+}
+
+.l-web .menu ul { margin: 0; padding: 0; }
+.l-web .menu ul li { list-style: none; margin: 0; padding: 0; height: 30px; }
+.l-web .menu ul li a { color: #333; font-size: 12px; text-decoration: none; display: block; padding-left: 10px; line-height: 30px; }
+.l-web .menu ul li a:hover { text-decoration: underline; background: #EEE; }
+
+.l-web .content { overflow: hidden; }
+.l-web .content h1 { font-size: 18px; border-bottom: 1px solid #EEE; margin: 0 0 10px 0; color: #555; }
 
 /* ==========================================================================
    Helper classes

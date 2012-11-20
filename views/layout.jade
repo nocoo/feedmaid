@@ -1,0 +1,33 @@
+doctype 5
+html
+    head
+        title feedmaid
+        link(rel='stylesheet', href='/css/normalize.css')
+        link(rel='stylesheet', href='/css/main.css')
+    body.l-web
+        header.clearfix
+            h1 feedmaid
+        section.container.clearfix
+            block menu
+                div.menu
+                    ul
+                        li
+                            a(href='/app/list', alt="app list") App List
+                        li
+                            a(href='/app/add', alt="new app") New App
+                        li
+                            a(href='/profile', alt="profile") Profile
+                        li
+                            a(href='/logout', alt="logout") Logout
+            div.content.clearfix
+                block content
+
+        footer
+            p feedmaid 0.0.1, the MIT License
+                a(href='http://about.me/nocoo', alt='about author') @zhengli
+                a(href='https://github.com/nocoo/feedmaid', alt='view in GitHub') GitHub
+        block logic
+            script(src='/js/jquery-1.8.2.min.js')
+            script(src='/js/jquery.sha256.min.js')
+            script(src='/js/sea.min.js')
+

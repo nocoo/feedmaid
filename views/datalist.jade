@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    h1 Data List
+    table.fm-table#main_table
+        thead
+            tr
+                th Create At
+                th Device ID
+                th Name
+                th Value
+                th More
+        tbody
+
+block append logic
+    script
+        (function () {
+            'use strict';
+            /*global seajs*/
+            seajs.use([ '/js/page.data.list.js' ], function (page) {
+                page.ready('#{appid}');
+            });
+        }());

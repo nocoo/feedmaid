@@ -5,7 +5,8 @@
     @version 0.1.0
 */
 
-var mongodb = require('mongodb');
+var mongodb = require('mongodb'),
+    entity = require('./entity');
 
 // feedmaid version.
 exports.VERSION = '0.1.0';
@@ -68,22 +69,49 @@ exports.timestamp = function(d) {
     return yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + min + ':' + ss;
 };
 
-// Check login.
-exports.check = function(req) {
-    if (req.session.admin) {
-        var time = (new Date).getTime();
-        if (!req.session.admin['check_at'] || time - req.session.admin['check_at'] > exports.SESSION_MAX_AGE) {
-            exports.log('User session timeout', req.session.admin['username']);
-            req.session.admin = undefined;
-            return undefined;
-        } else {
-            req.session.admin['check_at'] = time;
-            return req.session.admin;
+exports.check_token = function (token, callback) {
+    var cobj = entity.entity_get('session', { 'token': token }, function(code, extra) {
+        extra = extra[0];
+
+        if (!extra || extra == null) {
+            if (callback && typeof(callback) === 'function') {
+                callback(false);
+            }
+
+            return;
         }
-    } else {
-        req.session.admin = undefined;
-        return undefined;
-    }
+
+        var create_time = extra['create_at_timestamp'];
+        var check_time = extra['check_at_timestamp'];
+
+        var ctime = check_time ? check_time : create_time;
+        var time = (new Date).getTime();
+
+        if (ctime) {
+            // Never been checked.
+            if (time - ctime > exports.SESSION_MAX_AGE) {
+                // expired, delete this session.
+                entity.entity_delete('session', { 'token': token }, function(code, extra) {
+                    if (callback && typeof(callback) === 'function') {
+                        callback(false);
+                    }
+                });
+            } else {
+                // valid, update check time.
+                extra['check_at_timestamp'] = time;
+                //console.log(extra);
+                entity.entity_update('session', extra, function(code, extra) {
+                    if (callback && typeof(callback) === 'function') {
+                        callback(true);
+                    }
+                });
+            }
+        } else {
+            if (callback && typeof(callback) === 'function') {
+                callback(false);
+            }
+        }
+    });
 };
 
 exports.log = function(message, extra) {

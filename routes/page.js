@@ -12,3 +12,15 @@ exports.login = function(req, res) {
 exports.register = function(req, res) {
     res.render('register');
 };
+
+exports.applist = function(req, res) {
+    res.render('applist');
+};
+
+exports.appadd = function(req, res) {
+    res.render('appadd');
+};
+
+exports.datalist = function(req, res) {
+    res.render('datalist', { 'appid': req.params.appid });
+};

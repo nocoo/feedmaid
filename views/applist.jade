@@ -1,0 +1,26 @@
+extends layout
+
+block content
+    h1 App List
+    a.fm-button.fr(href='/app/add') Add
+    table.fm-table#main_table
+        thead
+            tr
+                th #AppID
+                th AppName
+                th Create At
+                th Owner
+                th More
+        tbody
+
+
+
+block append logic
+    script
+        (function () {
+            'use strict';
+            /*global seajs*/
+            seajs.use([ '/js/page.app.list.js' ], function (page) {
+                page.ready();
+            });
+        }());

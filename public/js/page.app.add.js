@@ -8,21 +8,19 @@
 define(function(require, exports, module) {
     exports.ready = function() {
         $(document).ready(function() {
-            // Events.
-            $('#btn_register').on('click', function() {
-                window.location.href = '/register';
-                return false;
-            });
-
-            var form = document.forms.form_login;
+            var form = document.forms.form_add;
             form.onsubmit = function() {
-                $.post('/api/login', {
-                    'username': form.username.value,
-                    'password': $.sha256(form.password.value)
+                $.post('/api/app/add', {
+                    'appname': form.appname.value,
+                    'appid': form.appid.value
                 }, function(back) {
                     if (back && back.code) {
-                        if (back.code === 200) {
+                        if (back.code === 400) {
+                            alert('App ID already been taken, please try another one.');
+                        } else if (back.code === 200) {
                             window.location.href = '/app/list';
+                        } else {
+                            window.location.href = '/';
                         }
                     }
                 });

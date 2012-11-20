@@ -1,0 +1,29 @@
+extends layout
+
+block content
+    h1 Add a new app
+    form.fm-form(name='form_add')
+        div.row.clearfix
+            div.name
+                p App name
+            div.value
+                input(type='text', name='appname')
+        div.row.clearfix
+            div.name
+                p App ID
+            div.value
+                input(type='text', name='appid')
+        div.row.clearfix
+            div.action
+                button.fm-button(type='submit') Add
+
+
+block append logic
+    script
+        (function () {
+            'use strict';
+            /*global seajs*/
+            seajs.use([ '/js/page.app.add.js' ], function (page) {
+                page.ready();
+            });
+        }());

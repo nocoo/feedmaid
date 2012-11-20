@@ -24,7 +24,7 @@ exports.entity_get = function(name, search, callback) {
                 return callback(506, error);
             }
 
-            collection.findOne(search, function(error, entity) {
+            collection.find(search).toArray(function(error, entity) {
                 db.close();
                 if(error) {
                     return callback(506, error);
